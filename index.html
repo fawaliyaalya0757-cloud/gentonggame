@@ -1,117 +1,182 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --purple:#7F77DD;--purple-light:#EEEDFE;--purple-dark:#534AB7;--purple-text:#3C3489;
-  --teal:#1D9E75;--teal-light:#E1F5EE;--teal-text:#085041;
-  --amber:#BA7517;--amber-light:#FAEEDA;--amber-text:#633806;
-  --coral:#D85A30;--coral-light:#FAECE7;--coral-text:#712B13;
-  --green:#3B6D11;--green-light:#EAF3DE;--green-text:#27500A;
-  --red:#E24B4A;--red-light:#FCEBEB;--red-text:#791F1F;
-}
-body{font-family:var(--font-sans);font-size:15px}
+body{font-family:var(--font-sans);font-size:15px;background:#0f1117}
 .screen{display:none}.screen.active{display:block}
 
-.hero{background:#EEEDFE;padding:1.5rem 1rem 1rem;text-align:center;border-radius:0 0 20px 20px;margin-bottom:1.25rem}
-.hero-icon{font-size:40px;margin-bottom:.5rem}
-.hero-title{font-size:20px;font-weight:500;color:#3C3489;margin-bottom:.25rem}
-.hero-sub{font-size:13px;color:#534AB7}
+.hero{position:relative;overflow:hidden;background:#0f1117;border-radius:0 0 24px 24px;margin-bottom:1.25rem;padding:0}
+.hero-art{width:100%;display:block}
+.hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1rem 1.1rem;background:linear-gradient(to top,#0f1117 40%,transparent)}
+.hero-title{font-size:22px;font-weight:500;color:#e8e4ff;margin-bottom:4px;letter-spacing:.01em}
+.hero-sub{font-size:13px;color:#9b96d4}
+.hero-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(127,119,221,0.22);border:1px solid rgba(127,119,221,0.35);border-radius:20px;padding:3px 10px;font-size:11px;color:#afa9ec;margin-bottom:.6rem}
 
-.section-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;text-transform:uppercase;padding:0 1rem;margin-bottom:.6rem}
+.section-label{font-size:11px;font-weight:500;color:#6b6890;letter-spacing:.07em;text-transform:uppercase;padding:0 1rem;margin-bottom:.6rem}
 
 .subj-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 1rem;margin-bottom:1.25rem}
-.subj-card{background:var(--color-background-primary);border:1.5px solid var(--color-border-tertiary);border-radius:14px;padding:.85rem .75rem;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent}
+.subj-card{background:#1a1d2e;border:1.5px solid #2a2b45;border-radius:14px;padding:.9rem .75rem;cursor:pointer;text-align:center;transition:border-color .15s,background .15s;-webkit-tap-highlight-color:transparent}
 .subj-card:active{transform:scale(.97)}
-.subj-card .s-icon{font-size:30px;margin-bottom:.4rem;line-height:1}
-.subj-card .s-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
-.subj-card .s-desc{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-.subj-card.sel-math{background:#EAF3DE;border-color:#3B6D11}.subj-card.sel-math .s-name{color:#27500A}
-.subj-card.sel-ipa{background:#E6F1FB;border-color:#185FA5}.subj-card.sel-ipa .s-name{color:#0C447C}
-.subj-card.sel-ips{background:#FAEEDA;border-color:#BA7517}.subj-card.sel-ips .s-name{color:#633806}
-.subj-card.sel-indo{background:#FBEAF0;border-color:#993556}.subj-card.sel-indo .s-name{color:#72243E}
-.subj-card.sel-ing{background:#EEEDFE;border-color:#534AB7}.subj-card.sel-ing .s-name{color:#3C3489}
-.subj-card.sel-ppkn{background:#FAECE7;border-color:#993C1D}.subj-card.sel-ppkn .s-name{color:#712B13}
+.subj-card .s-icon{font-size:28px;margin-bottom:.4rem;line-height:1}
+.subj-card .s-name{font-size:13px;font-weight:500;color:#c9c5f0}
+.subj-card .s-desc{font-size:11px;color:#6b6890;margin-top:2px}
+.subj-card.sel{background:#24204a;border-color:#7F77DD}
+.subj-card.sel .s-name{color:#afa9ec}
 
 .diff-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0 1rem;margin-bottom:1.25rem}
-.diff-card{border-radius:12px;padding:.75rem .5rem;cursor:pointer;text-align:center;border:1.5px solid transparent;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.diff-card{border-radius:12px;padding:.8rem .5rem;cursor:pointer;text-align:center;border:1.5px solid transparent;transition:all .15s;-webkit-tap-highlight-color:transparent}
 .diff-card:active{transform:scale(.96)}
-.diff-easy{background:#E1F5EE;border-color:#5DCAA5}
-.diff-med{background:#FAEEDA;border-color:#EF9F27}
-.diff-hard{background:#FAECE7;border-color:#F0997B}
-.diff-card .d-icon{font-size:24px;margin-bottom:3px}
+.dc-easy{background:#0d2218;border-color:#1a5c38}
+.dc-med{background:#221a09;border-color:#6b4a0d}
+.dc-hard{background:#220e0e;border-color:#7a2020}
+.diff-card .d-icon{font-size:22px;margin-bottom:3px}
 .diff-card .d-name{font-size:13px;font-weight:500}
 .diff-card .d-desc{font-size:10px;margin-top:1px}
-.diff-easy .d-name{color:#085041}.diff-easy .d-desc{color:#0F6E56}
-.diff-med .d-name{color:#633806}.diff-med .d-desc{color:#854F0B}
-.diff-hard .d-name{color:#712B13}.diff-hard .d-desc{color:#993C1D}
-.diff-card.active-easy{border-width:2.5px;border-color:#1D9E75}
-.diff-card.active-med{border-width:2.5px;border-color:#BA7517}
-.diff-card.active-hard{border-width:2.5px;border-color:#D85A30}
+.dc-easy .d-name{color:#5DCAA5}.dc-easy .d-desc{color:#1D9E75}
+.dc-med .d-name{color:#EF9F27}.dc-med .d-desc{color:#BA7517}
+.dc-hard .d-name{color:#F0997B}.dc-hard .d-desc{color:#D85A30}
+.dc-easy.da{border-color:#1D9E75;border-width:2px}
+.dc-med.da{border-color:#EF9F27;border-width:2px}
+.dc-hard.da{border-color:#D85A30;border-width:2px}
 
 .start-wrap{padding:0 1rem 1.5rem}
-.btn-start{display:block;width:100%;padding:.85rem;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:500;cursor:pointer;transition:background .15s,transform .1s;-webkit-tap-highlight-color:transparent}
-.btn-start:active{transform:scale(.98);background:#534AB7}
-.btn-start:disabled{background:#B4B2A9;color:#F1EFE8;cursor:not-allowed;transform:none}
+.btn-start{display:block;width:100%;padding:.85rem;background:#534AB7;color:#e8e4ff;border:none;border-radius:14px;font-size:16px;font-weight:500;cursor:pointer;transition:background .15s,transform .1s;-webkit-tap-highlight-color:transparent}
+.btn-start:active{transform:scale(.98);background:#3C3489}
+.btn-start:disabled{background:#1e1d2e;color:#3a3856;cursor:not-allowed}
 
-.game-wrap{padding:1rem}
+.game-wrap{padding:1rem;background:#0f1117;min-height:100%}
 .g-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
-.g-badge{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;background:#EEEDFE;color:#534AB7;border-radius:20px;padding:4px 10px}
-.g-streak{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:20px;padding:4px 10px}
+.g-badge{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;background:#24204a;color:#afa9ec;border-radius:20px;padding:4px 10px;border:1px solid #3a3670}
+.g-streak{display:flex;align-items:center;gap:4px;font-size:12px;color:#6b6890;background:#1a1d2e;border-radius:20px;padding:4px 10px}
 .timer-row{display:flex;align-items:center;gap:8px;margin-bottom:.85rem}
-.timer-bar{flex:1;height:7px;background:var(--color-background-secondary);border-radius:99px;overflow:hidden}
+.timer-bar{flex:1;height:7px;background:#1a1d2e;border-radius:99px;overflow:hidden}
 .t-fill{height:100%;border-radius:99px;background:#1D9E75;transition:width .1s linear}
 .t-fill.urgent{background:#E24B4A}
-.t-num{font-size:13px;font-weight:500;min-width:28px;color:var(--color-text-secondary)}
-.prog-row{display:flex;align-items:center;gap:8px;margin-bottom:1.25rem}
-.prog-bar{flex:1;height:5px;background:var(--color-background-secondary);border-radius:99px;overflow:hidden}
+.t-num{font-size:13px;font-weight:500;min-width:28px;color:#6b6890}
+.prog-row{display:flex;align-items:center;gap:8px;margin-bottom:1.1rem}
+.prog-bar{flex:1;height:5px;background:#1a1d2e;border-radius:99px;overflow:hidden}
 .p-fill{height:100%;background:#7F77DD;border-radius:99px;transition:width .3s}
-.q-label{font-size:11px;color:var(--color-text-secondary);white-space:nowrap}
+.q-label{font-size:11px;color:#6b6890;white-space:nowrap}
 
-.q-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:16px;padding:1.1rem;margin-bottom:1rem}
-.q-text{font-size:16px;font-weight:500;color:var(--color-text-primary);line-height:1.5;text-align:center;min-height:56px}
+.q-card{background:#1a1d2e;border:1px solid #2a2b45;border-radius:16px;padding:1.1rem;margin-bottom:1rem}
+.q-text{font-size:16px;font-weight:500;color:#e8e4ff;line-height:1.5;text-align:center;min-height:56px}
 
 .ans-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:.85rem}
-.ans-btn{background:var(--color-background-primary);border:1.5px solid var(--color-border-tertiary);border-radius:12px;padding:.7rem .6rem;cursor:pointer;font-size:13px;text-align:center;color:var(--color-text-primary);line-height:1.4;transition:all .12s;-webkit-tap-highlight-color:transparent;min-height:52px;display:flex;align-items:center;justify-content:center}
+.ans-btn{background:#1a1d2e;border:1.5px solid #2a2b45;border-radius:12px;padding:.7rem .6rem;cursor:pointer;font-size:13px;text-align:center;color:#c9c5f0;line-height:1.4;transition:all .12s;-webkit-tap-highlight-color:transparent;min-height:52px;display:flex;align-items:center;justify-content:center}
 .ans-btn:active:not(:disabled){transform:scale(.96)}
-.ans-btn.correct{background:#E1F5EE;border-color:#1D9E75;color:#085041;font-weight:500}
-.ans-btn.wrong{background:#FCEBEB;border-color:#E24B4A;color:#791F1F}
-.ans-btn.reveal{background:#FAEEDA;border-color:#BA7517;color:#633806}
+.ans-btn.correct{background:#0d2218;border-color:#1D9E75;color:#5DCAA5;font-weight:500}
+.ans-btn.wrong{background:#220e0e;border-color:#E24B4A;color:#F09595}
+.ans-btn.reveal{background:#221a09;border-color:#EF9F27;color:#FAC775}
 
-.feedback-box{border-radius:12px;padding:.65rem 1rem;margin-bottom:.85rem;font-size:14px;font-weight:500;text-align:center;min-height:44px;display:flex;align-items:center;justify-content:center}
-.fb-ok{background:#E1F5EE;color:#085041}
-.fb-no{background:#FCEBEB;color:#791F1F}
-.fb-time{background:#FAEEDA;color:#633806}
+.fb-box{border-radius:12px;padding:.65rem 1rem;margin-bottom:.85rem;font-size:14px;font-weight:500;text-align:center;min-height:44px;display:flex;align-items:center;justify-content:center}
+.fb-ok{background:#0d2218;color:#5DCAA5}
+.fb-no{background:#220e0e;color:#F09595}
+.fb-time{background:#221a09;color:#FAC775}
 .fb-empty{background:transparent;color:transparent}
 
-.btn-next{display:block;width:100%;padding:.8rem;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:500;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.btn-next:active{background:#534AB7;transform:scale(.98)}
+.btn-next{display:block;width:100%;padding:.8rem;background:#534AB7;color:#e8e4ff;border:none;border-radius:12px;font-size:15px;font-weight:500;cursor:pointer}
+.btn-next:active{background:#3C3489;transform:scale(.98)}
 
-.result-wrap{padding:1rem}
-.result-hero{background:#EEEDFE;border-radius:16px;padding:1.5rem 1rem;text-align:center;margin-bottom:1rem}
-.res-big{font-size:40px;font-weight:500;color:#3C3489}
-.res-unit{font-size:14px;color:#534AB7;margin-top:.25rem}
+.result-wrap{padding:1rem;background:#0f1117}
+.result-hero{background:#1a1d2e;border:1px solid #2a2b45;border-radius:16px;padding:1.5rem 1rem;text-align:center;margin-bottom:1rem}
+.res-big{font-size:40px;font-weight:500;color:#afa9ec}
+.res-unit{font-size:14px;color:#7F77DD;margin-top:.25rem}
 .res-stars{font-size:30px;margin:1rem 0 .5rem;letter-spacing:4px}
-.res-msg{font-size:14px;color:#534AB7;line-height:1.5}
+.res-msg{font-size:14px;color:#9b96d4;line-height:1.5}
 .stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1rem}
-.stat-item{background:var(--color-background-secondary);border-radius:12px;padding:.75rem .5rem;text-align:center}
+.stat-item{background:#1a1d2e;border:1px solid #2a2b45;border-radius:12px;padding:.75rem .5rem;text-align:center}
 .stat-num{font-size:20px;font-weight:500}
-.stat-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-.stat-ok .stat-num{color:#1D9E75}
-.stat-no .stat-num{color:#E24B4A}
-.stat-t .stat-num{color:#7F77DD}
+.stat-lbl{font-size:11px;color:#6b6890;margin-top:2px}
+.s-ok .stat-num{color:#5DCAA5}.s-no .stat-num{color:#F09595}.s-t .stat-num{color:#afa9ec}
 .btn-row-r{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.btn-home{padding:.8rem;border:1.5px solid var(--color-border-secondary);background:var(--color-background-primary);border-radius:12px;font-size:14px;cursor:pointer;color:var(--color-text-primary);-webkit-tap-highlight-color:transparent}
-.btn-replay{padding:.8rem;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.btn-replay:active{background:#534AB7}
+.btn-home{padding:.8rem;border:1.5px solid #2a2b45;background:#1a1d2e;border-radius:12px;font-size:14px;cursor:pointer;color:#c9c5f0}
+.btn-replay{padding:.8rem;background:#534AB7;color:#e8e4ff;border:none;border-radius:12px;font-size:14px;font-weight:500;cursor:pointer}
+.btn-replay:active{background:#3C3489}
 </style>
 
-<h2 class="sr-only" style="position:absolute;left:-9999px">Kuis Pintar — game edukasi interaktif</h2>
+<h2 style="position:absolute;left:-9999px">Kuis Pintar — game edukasi interaktif tema gelap</h2>
 
 <div id="s-menu" class="screen active">
   <div class="hero">
-    <div class="hero-icon">🎓</div>
-    <div class="hero-title">Kuis Pintar</div>
-    <div class="hero-sub">Pilih pelajaran & level — lalu mulai!</div>
+    <svg class="hero-art" width="100%" viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="380" height="200" fill="#0a0c18"/>
+      <rect width="380" height="200" fill="#0f1117"/>
+      <circle cx="30" cy="25" r="1.2" fill="#7F77DD" opacity=".9"/>
+      <circle cx="72" cy="14" r=".8" fill="#afa9ec" opacity=".7"/>
+      <circle cx="120" cy="30" r="1" fill="#7F77DD" opacity=".6"/>
+      <circle cx="160" cy="10" r="1.4" fill="#fff" opacity=".5"/>
+      <circle cx="200" cy="22" r=".7" fill="#afa9ec" opacity=".8"/>
+      <circle cx="240" cy="8" r="1.1" fill="#7F77DD" opacity=".7"/>
+      <circle cx="280" cy="28" r=".9" fill="#fff" opacity=".5"/>
+      <circle cx="320" cy="15" r="1.3" fill="#afa9ec" opacity=".6"/>
+      <circle cx="355" cy="32" r=".8" fill="#7F77DD" opacity=".7"/>
+      <circle cx="48" cy="45" r=".7" fill="#fff" opacity=".4"/>
+      <circle cx="90" cy="52" r="1" fill="#afa9ec" opacity=".5"/>
+      <circle cx="135" cy="48" r=".6" fill="#7F77DD" opacity=".6"/>
+      <circle cx="175" cy="55" r=".9" fill="#fff" opacity=".4"/>
+      <circle cx="218" cy="44" r=".7" fill="#afa9ec" opacity=".5"/>
+      <circle cx="258" cy="56" r="1.1" fill="#7F77DD" opacity=".5"/>
+      <circle cx="300" cy="42" r=".8" fill="#fff" opacity=".4"/>
+      <circle cx="340" cy="58" r=".6" fill="#afa9ec" opacity=".5"/>
+      <circle cx="10" cy="65" r=".9" fill="#7F77DD" opacity=".4"/>
+      <circle cx="370" cy="48" r=".7" fill="#fff" opacity=".3"/>
+      <ellipse cx="190" cy="105" rx="88" ry="88" fill="#1a1540" opacity=".5"/>
+      <ellipse cx="190" cy="105" rx="60" ry="60" fill="#1e1a4a" opacity=".45"/>
+      <rect x="152" y="68" width="58" height="74" rx="4" fill="#2a2460"/>
+      <rect x="154" y="70" width="54" height="70" rx="3" fill="#1e1a4a"/>
+      <rect x="158" y="75" width="46" height="4" rx="2" fill="#534AB7" opacity=".8"/>
+      <rect x="158" y="83" width="36" height="2.5" rx="1.5" fill="#7F77DD" opacity=".5"/>
+      <rect x="158" y="89" width="40" height="2.5" rx="1.5" fill="#7F77DD" opacity=".4"/>
+      <rect x="158" y="95" width="32" height="2.5" rx="1.5" fill="#7F77DD" opacity=".3"/>
+      <rect x="158" y="101" width="38" height="2.5" rx="1.5" fill="#7F77DD" opacity=".35"/>
+      <rect x="158" y="107" width="28" height="2.5" rx="1.5" fill="#7F77DD" opacity=".3"/>
+      <rect x="158" y="113" width="42" height="2.5" rx="1.5" fill="#7F77DD" opacity=".25"/>
+      <rect x="158" y="119" width="34" height="2.5" rx="1.5" fill="#7F77DD" opacity=".25"/>
+      <rect x="155" y="130" width="52" height="8" rx="2" fill="#534AB7" opacity=".7"/>
+      <rect x="148" y="136" width="66" height="5" rx="2" fill="#3C3489"/>
+      <rect x="146" y="140" width="70" height="3" rx="1.5" fill="#26215C"/>
+      <g opacity=".85">
+        <polygon points="104,148 108,118 116,118 120,148" fill="#2a2460"/>
+        <polygon points="105,149 107,120 117,120 119,149" fill="#534AB7" opacity=".6"/>
+        <rect x="104" y="148" width="16" height="3" rx="1" fill="#3C3489"/>
+      </g>
+      <g opacity=".85">
+        <polygon points="260,148 264,118 272,118 276,148" fill="#2a2460"/>
+        <polygon points="261,149 263,120 273,120 275,149" fill="#7F77DD" opacity=".5"/>
+        <rect x="260" y="148" width="16" height="3" rx="1" fill="#534AB7"/>
+      </g>
+      <g opacity=".7">
+        <polygon points="80,148 83,126 89,126 92,148" fill="#2a2460"/>
+        <rect x="80" y="148" width="12" height="2.5" rx="1" fill="#3C3489"/>
+      </g>
+      <g opacity=".7">
+        <polygon points="288,148 291,126 297,126 300,148" fill="#2a2460"/>
+        <rect x="288" y="148" width="12" height="2.5" rx="1" fill="#3C3489"/>
+      </g>
+      <path d="M60,100 Q80,90 100,95" stroke="#7F77DD" stroke-width="1.5" fill="none" opacity=".4"/>
+      <circle cx="60" cy="100" r="3.5" fill="#1D9E75" opacity=".7"/>
+      <circle cx="100" cy="95" r="2.5" fill="#1D9E75" opacity=".5"/>
+      <path d="M280,95 Q300,85 320,90" stroke="#EF9F27" stroke-width="1.5" fill="none" opacity=".4"/>
+      <circle cx="280" cy="95" r="3.5" fill="#EF9F27" opacity=".6"/>
+      <circle cx="320" cy="90" r="2.5" fill="#EF9F27" opacity=".4"/>
+      <circle cx="190" cy="62" r="8" fill="#EF9F27" opacity=".25"/>
+      <circle cx="190" cy="62" r="5" fill="#EF9F27" opacity=".5"/>
+      <line x1="186" y1="55" x2="186" y2="52" stroke="#EF9F27" stroke-width="1.5" opacity=".7"/>
+      <line x1="194" y1="55" x2="194" y2="52" stroke="#EF9F27" stroke-width="1.5" opacity=".7"/>
+      <line x1="183" y1="57" x2="181" y2="55" stroke="#EF9F27" stroke-width="1.5" opacity=".7"/>
+      <line x1="197" y1="57" x2="199" y2="55" stroke="#EF9F27" stroke-width="1.5" opacity=".7"/>
+      <rect x="0" y="148" width="380" height="52" fill="url(#fade)"/>
+      <defs>
+        <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0f1117" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#0f1117" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="hero-overlay">
+      <div class="hero-badge"><i class="ti ti-bolt" style="font-size:11px" aria-hidden="true"></i> SD — SMA / SMK</div>
+      <div class="hero-title">Kuis Pintar</div>
+      <div class="hero-sub">Belajar seru, pilih pelajaran & level-mu!</div>
+    </div>
   </div>
 
   <p class="section-label">Mata Pelajaran</p>
@@ -150,17 +215,17 @@ body{font-family:var(--font-sans);font-size:15px}
 
   <p class="section-label">Tingkat Kesulitan</p>
   <div class="diff-row" id="diff-row">
-    <div class="diff-card diff-easy" data-val="easy" onclick="pickDiff(this)">
+    <div class="diff-card dc-easy" data-val="easy" onclick="pickDiff(this)">
       <div class="d-icon">🌱</div>
       <div class="d-name">Easy</div>
       <div class="d-desc">Kelas 1–3 SD</div>
     </div>
-    <div class="diff-card diff-med" data-val="med" onclick="pickDiff(this)">
+    <div class="diff-card dc-med" data-val="med" onclick="pickDiff(this)">
       <div class="d-icon">⚡</div>
       <div class="d-name">Medium</div>
       <div class="d-desc">Kelas 4–9</div>
     </div>
-    <div class="diff-card diff-hard" data-val="hard" onclick="pickDiff(this)">
+    <div class="diff-card dc-hard" data-val="hard" onclick="pickDiff(this)">
       <div class="d-icon">🔥</div>
       <div class="d-name">Hard</div>
       <div class="d-desc">Kelas 10–12</div>
@@ -175,11 +240,11 @@ body{font-family:var(--font-sans);font-size:15px}
 <div id="s-game" class="screen">
   <div class="game-wrap">
     <div class="g-header">
-      <div class="g-badge"><i class="ti ti-star" aria-hidden="true"></i><span id="score-disp">0</span> poin</div>
+      <div class="g-badge"><i class="ti ti-star" style="font-size:13px" aria-hidden="true"></i><span id="score-disp">0</span> poin</div>
       <div class="g-streak">🔥 <span id="streak-txt">0</span> streak</div>
     </div>
     <div class="timer-row">
-      <i class="ti ti-clock" style="font-size:15px;color:var(--color-text-secondary)" aria-hidden="true"></i>
+      <i class="ti ti-clock" style="font-size:14px;color:#6b6890" aria-hidden="true"></i>
       <div class="timer-bar"><div class="t-fill" id="t-fill"></div></div>
       <span class="t-num" id="t-num">30s</span>
     </div>
@@ -191,7 +256,7 @@ body{font-family:var(--font-sans);font-size:15px}
       <p class="q-text" id="q-text"></p>
     </div>
     <div class="ans-grid" id="ans-grid"></div>
-    <div class="feedback-box fb-empty" id="feedback"></div>
+    <div class="fb-box fb-empty" id="feedback"></div>
     <button class="btn-next" id="next-btn" style="display:none" onclick="nextQ()">Soal Berikutnya →</button>
   </div>
 </div>
@@ -205,9 +270,9 @@ body{font-family:var(--font-sans);font-size:15px}
       <div class="res-msg" id="res-msg"></div>
     </div>
     <div class="stat-row">
-      <div class="stat-item stat-ok"><div class="stat-num" id="r-correct">0</div><div class="stat-lbl">Benar</div></div>
-      <div class="stat-item stat-no"><div class="stat-num" id="r-wrong">0</div><div class="stat-lbl">Salah</div></div>
-      <div class="stat-item stat-t"><div class="stat-num" id="r-time">0s</div><div class="stat-lbl">Waktu</div></div>
+      <div class="stat-item s-ok"><div class="stat-num" id="r-correct">0</div><div class="stat-lbl">Benar</div></div>
+      <div class="stat-item s-no"><div class="stat-num" id="r-wrong">0</div><div class="stat-lbl">Salah</div></div>
+      <div class="stat-item s-t"><div class="stat-num" id="r-time">0s</div><div class="stat-lbl">Waktu</div></div>
     </div>
     <div class="btn-row-r">
       <button class="btn-home" onclick="goMenu()"><i class="ti ti-home" aria-hidden="true"></i> Menu</button>
@@ -234,20 +299,20 @@ const QS={
       {q:"Sudut lancip besarnya?",a:["< 90°","= 90°","> 90°","= 180°"],c:0},{q:"Keliling lingkaran r=7, π=22/7",a:["44 cm","22 cm","14 cm","88 cm"],c:0}
     ],
     hard:[
-      {q:"f(x) = 2x²−3x+1, f(3) = ?",a:["10","9","11","12"],c:0},{q:"log₂(32) = ?",a:["5","4","6","3"],c:0},
-      {q:"Turunan y = 3x³ − 2x?",a:["9x² − 2","9x²−2x","3x²−2","6x³−2"],c:0},{q:"sin 30° = ?",a:["½","√3/2","1","0"],c:0},
-      {q:"∫2x dx = ?",a:["x² + C","x²−C","2x²+C","x+C"],c:0},{q:"Det [[3,1],[2,4]] = ?",a:["10","11","12","8"],c:0},
-      {q:"Barisan: 2,6,18,... Suku ke-5?",a:["162","108","54","81"],c:0},{q:"x²−5x+6=0. Nilai x?",a:["2 dan 3","1 dan 6","−2 dan −3","1 dan 5"],c:0},
-      {q:"cos 60° = ?",a:["½","√3/2","1","0"],c:0},{q:"Lim x→2 (x²−4)/(x−2) = ?",a:["4","2","0","∞"],c:0}
+      {q:"f(x)=2x²−3x+1, f(3)=?",a:["10","9","11","12"],c:0},{q:"log₂(32)=?",a:["5","4","6","3"],c:0},
+      {q:"Turunan y=3x³−2x?",a:["9x²−2","9x²−2x","3x²−2","6x³−2"],c:0},{q:"sin 30°=?",a:["½","√3/2","1","0"],c:0},
+      {q:"∫2x dx=?",a:["x²+C","x²−C","2x²+C","x+C"],c:0},{q:"Det [[3,1],[2,4]]=?",a:["10","11","12","8"],c:0},
+      {q:"Barisan: 2,6,18,... Suku ke-5?",a:["162","108","54","81"],c:0},{q:"x²−5x+6=0, nilai x?",a:["2 dan 3","1 dan 6","−2 dan −3","1 dan 5"],c:0},
+      {q:"cos 60°=?",a:["½","√3/2","1","0"],c:0},{q:"Lim x→2 (x²−4)/(x−2)=?",a:["4","2","0","∞"],c:0}
     ]
   },
   ipa:{
     easy:[
-      {q:"Makhluk hidup yang bisa membuat makanan sendiri?",a:["Tumbuhan","Hewan","Jamur","Bakteri"],c:0},
+      {q:"Makhluk hidup bisa membuat makanan sendiri?",a:["Tumbuhan","Hewan","Jamur","Bakteri"],c:0},
       {q:"Planet terbesar di tata surya?",a:["Jupiter","Saturnus","Mars","Bumi"],c:0},
       {q:"Air mendidih pada suhu?",a:["100°C","50°C","80°C","90°C"],c:0},
       {q:"Hewan yang bertelur disebut?",a:["Ovipar","Vivipar","Ovovivipar","Amfibi"],c:0},
-      {q:"Bagian tumbuhan yang menyerap air dari tanah?",a:["Akar","Daun","Batang","Bunga"],c:0},
+      {q:"Bagian tumbuhan yang menyerap air?",a:["Akar","Daun","Batang","Bunga"],c:0},
       {q:"Magnet menarik benda dari?",a:["Besi","Kayu","Plastik","Karet"],c:0},
       {q:"Manusia bernapas menggunakan?",a:["Paru-paru","Insang","Kulit","Stomata"],c:0},
       {q:"Proses penguapan air ke atmosfer?",a:["Evaporasi","Kondensasi","Presipitasi","Infiltrasi"],c:0},
@@ -261,22 +326,22 @@ const QS={
       {q:"Kecepatan cahaya ≈ ?",a:["3×10⁸ m/s","3×10⁶ m/s","3×10¹⁰ m/s","3×10⁴ m/s"],c:0},
       {q:"DNA terdapat di dalam?",a:["Nukleus","Sitoplasma","Ribosom","Membran sel"],c:0},
       {q:"Rumus kimia air?",a:["H₂O","CO₂","NaCl","O₂"],c:0},
-      {q:"Jaringan angkut hasil fotosintesis?",a:["Floem","Xilem","Epidermis","Kambium"],c:0},
+      {q:"Jaringan angkut fotosintesis?",a:["Floem","Xilem","Epidermis","Kambium"],c:0},
       {q:"Gas mulia ada di golongan?",a:["VIII A","I A","VII A","VI A"],c:0},
       {q:"Usus halus berfungsi?",a:["Menyerap sari makanan","Mencerna kasar","Menyimpan makanan","Membuang sisa"],c:0},
       {q:"Tulang pelindung jantung & paru-paru?",a:["Tulang rusuk","Tulang belakang","Tulang panggul","Tengkorak"],c:0}
     ],
     hard:[
-      {q:"Energi fisi nuklir sesuai rumus?",a:["E = mc²","F = ma","E = hf","P = VI"],c:0},
-      {q:"Organel di sel tumbuhan, tidak ada di sel hewan?",a:["Dinding sel & kloroplas","Mitokondria","Nukleus","Ribosom"],c:0},
+      {q:"Energi fisi nuklir sesuai rumus?",a:["E=mc²","F=ma","E=hf","P=VI"],c:0},
+      {q:"Organel hanya di sel tumbuhan?",a:["Dinding sel & kloroplas","Mitokondria","Nukleus","Ribosom"],c:0},
       {q:"Entropi adalah ukuran?",a:["Ketidakteraturan sistem","Energi sistem","Tekanan sistem","Suhu sistem"],c:0},
       {q:"Ikatan kovalen terjadi karena?",a:["Pemakaian elektron bersama","Transfer elektron","Gaya Van der Waals","Ikatan hidrogen"],c:0},
       {q:"Dasar teori evolusi Darwin?",a:["Seleksi alam","Mutasi gen","Hibridisasi","Epigenetika"],c:0},
       {q:"Gelombang EM frekuensi tertinggi?",a:["Sinar gamma","Sinar X","Ultraviolet","Cahaya tampak"],c:0},
       {q:"Reaksi redoks melibatkan?",a:["Transfer elektron","Transfer proton","Transfer neutron","Transfer foton"],c:0},
-      {q:"Indeks bias kaca ≈ 1,5 artinya?",a:["Cahaya melambat 1,5× dalam kaca","Cahaya 1,5× lebih cepat","Kaca menyerap 1,5%","Pantulan 1,5×"],c:0},
-      {q:"Potensial aksi neuron terjadi karena?",a:["Ion Na⁺ masuk sel","Ion K⁺ masuk sel","Ion Ca²⁺ keluar","Ion Cl⁻ masuk"],c:0},
-      {q:"Hukum Mendel 1 menyatakan?",a:["Gen berpasangan memisah saat gamet","Gen bebas berpadu","Gen terpaut kromosom","Mutasi spontan"],c:0}
+      {q:"Indeks bias kaca 1,5 artinya?",a:["Cahaya melambat 1,5× dalam kaca","Cahaya lebih cepat 1,5×","Kaca menyerap 1,5%","Pantulan 1,5×"],c:0},
+      {q:"Potensial aksi neuron terjadi karena?",a:["Ion Na⁺ masuk sel","Ion K⁺ masuk","Ion Ca²⁺ keluar","Ion Cl⁻ masuk"],c:0},
+      {q:"Hukum Mendel 1 menyatakan?",a:["Gen memisah saat gamet","Gen bebas berpadu","Gen terpaut kromosom","Mutasi spontan"],c:0}
     ]
   },
   ips:{
@@ -288,7 +353,7 @@ const QS={
       {q:"Mata uang Jepang?",a:["Yen","Won","Yuan","Dollar"],c:0},
       {q:"Presiden pertama Indonesia?",a:["Soekarno","Soeharto","Habibie","Gus Dur"],c:0},
       {q:"Gunung tertinggi di dunia?",a:["Everest","Rinjani","Kilimanjaro","Fuji"],c:0},
-      {q:"Indonesia diapit dua samudra yaitu?",a:["Hindia & Pasifik","Atlantik & Pasifik","Hindia & Atlantik","Arktik & Pasifik"],c:0},
+      {q:"Indonesia diapit dua samudra?",a:["Hindia & Pasifik","Atlantik & Pasifik","Hindia & Atlantik","Arktik & Pasifik"],c:0},
       {q:"Pancasila terdiri dari berapa sila?",a:["5","4","6","3"],c:0},
       {q:"Bahasa resmi PBB berjumlah?",a:["6","4","5","8"],c:0}
     ],
@@ -314,7 +379,7 @@ const QS={
       {q:"Perang Dingin antara?",a:["AS & Uni Soviet","AS & China","Eropa & Asia","NATO & ASEAN"],c:0},
       {q:"GDP adalah ukuran?",a:["Total produksi barang/jasa","Total utang negara","Total ekspor","Total pekerja"],c:0},
       {q:"Piagam PBB ditandatangani tahun?",a:["1945","1944","1946","1948"],c:0},
-      {q:"Teori kontrak sosial Rousseau berbeda Hobbes karena?",a:["Rousseau optimis tentang manusia","Hobbes optimis","Keduanya sama","Rousseau tolak negara"],c:0}
+      {q:"Rousseau vs Hobbes: Rousseau?",a:["Optimis tentang sifat manusia","Pesimis tentang manusia","Tolak kontrak sosial","Dukung monarki"],c:0}
     ]
   },
   indo:{
@@ -323,41 +388,41 @@ const QS={
       {q:"Antonim dari 'panas'?",a:["Dingin","Sejuk","Hangat","Beku"],c:0},
       {q:"Sinonim kata 'cantik'?",a:["Indah","Jelek","Biasa","Kotor"],c:0},
       {q:"Kata 'berlari' termasuk jenis kata?",a:["Kata kerja","Kata benda","Kata sifat","Kata keterangan"],c:0},
-      {q:"Huruf vokal dalam bahasa Indonesia ada?",a:["5","4","6","7"],c:0},
-      {q:"Imbuhan 'me-' pada 'menulis' berfungsi sebagai?",a:["Awalan verba","Akhiran","Sisipan","Kombinasi"],c:0},
-      {q:"Teks berisi fakta dan ilmiah disebut?",a:["Teks eksposisi","Teks narasi","Teks persuasi","Teks deskripsi"],c:0},
-      {q:"Kalimat yang punya subjek dan predikat?",a:["Kalimat lengkap","Kalimat majemuk","Kalimat tanya","Kalimat seru"],c:0},
+      {q:"Huruf vokal dalam bahasa Indonesia?",a:["5","4","6","7"],c:0},
+      {q:"Imbuhan 'me-' pada 'menulis'?",a:["Awalan verba","Akhiran","Sisipan","Kombinasi"],c:0},
+      {q:"Teks berisi fakta dan ilmiah?",a:["Teks eksposisi","Teks narasi","Teks persuasi","Teks deskripsi"],c:0},
+      {q:"Kalimat dengan subjek & predikat?",a:["Kalimat lengkap","Kalimat majemuk","Kalimat tanya","Kalimat seru"],c:0},
       {q:"EYD singkatan dari?",a:["Ejaan Yang Disempurnakan","Ejaan Yang Diperbarui","Ejaan Yang Ditetapkan","Ejaan Yang Dibakukan"],c:0},
       {q:"Puisi 5-7-5 suku kata berasal dari?",a:["Jepang","China","Korea","India"],c:0}
     ],
     med:[
-      {q:"Majas perbandingan dengan 'seperti/bagai'?",a:["Simile","Metafora","Personifikasi","Hiperbola"],c:0},
+      {q:"Majas perbandingan dengan 'bagai'?",a:["Simile","Metafora","Personifikasi","Hiperbola"],c:0},
       {q:"Pantun: sampiran di baris?",a:["1 dan 2","3 dan 4","1 dan 3","2 dan 4"],c:0},
       {q:"Paragraf induktif dimulai dari?",a:["Kalimat khusus ke umum","Kalimat umum ke khusus","Campuran","Deskripsi"],c:0},
       {q:"Novel pertama bahasa Indonesia?",a:["Azab dan Sengsara","Siti Nurbaya","Salah Asuhan","Tenggelamnya Kapal"],c:0},
-      {q:"Teks prosedur bertujuan untuk?",a:["Memandu melakukan sesuatu","Meyakinkan pembaca","Menghibur","Mendeskripsikan"],c:0},
+      {q:"Teks prosedur bertujuan?",a:["Memandu melakukan sesuatu","Meyakinkan pembaca","Menghibur","Mendeskripsikan"],c:0},
       {q:"Prefiks 'ke-' + angka membentuk?",a:["Bilangan tingkat","Bilangan pokok","Kata sifat","Kata kerja"],c:0},
       {q:"Kalimat efektif syaratnya?",a:["Kepaduan & ketepatan","Panjang & rumit","Puitis & metaforis","Daerah & baku"],c:0},
-      {q:"Kata 'sastrawan' mendapat akhiran?",a:["-wan","-an","-wati","-is"],c:0},
+      {q:"Kata 'sastrawan' akhiran?",a:["-wan","-an","-wati","-is"],c:0},
       {q:"Struktur teks argumentasi diakhiri?",a:["Penegasan ulang","Pernyataan pendapat","Alasan","Abstrak"],c:0},
-      {q:"Kata baku dari 'ijasah'?",a:["Ijazah","Ijasah","Ijazah","Ijasan"],c:0}
+      {q:"Kata baku dari 'ijasah'?",a:["Ijazah","Ijasah","Ijasah","Ijasan"],c:0}
     ],
     hard:[
-      {q:"Aliran sastra yang utamakan kenyataan sosial?",a:["Realisme","Romantisme","Naturalisme","Surealisme"],c:0},
+      {q:"Aliran sastra utamakan kenyataan sosial?",a:["Realisme","Romantisme","Naturalisme","Surealisme"],c:0},
       {q:"Unsur intrinsik cerpen BUKAN?",a:["Latar belakang pengarang","Tema","Alur","Penokohan"],c:0},
       {q:"Angkatan '45 dipelopori oleh?",a:["Chairil Anwar","Balai Pustaka","HB Jassin","Pramoedya"],c:0},
-      {q:"Denotasi vs konotasi: denotasi adalah?",a:["Makna harfiah","Makna tambahan","Makna emosional","Makna kiasan"],c:0},
-      {q:"Dalam retorika, ethos merujuk pada?",a:["Kredibilitas pembicara","Emosi audiens","Logika argumen","Estetika bahasa"],c:0},
-      {q:"Fungsi bahasa Jakobson yang fokus pada pesan?",a:["Puitik","Referensial","Fatik","Konatif"],c:0},
-      {q:"Gaya bahasa ironi adalah?",a:["Sindiran halus berlawanan makna","Penghematan kata","Perulangan kata","Perbandingan langsung"],c:0},
-      {q:"Hipogram dalam puisi merupakan?",a:["Teks latar belakang puisi baru","Rima akhir baris","Jumlah bait","Jenis irama"],c:0},
+      {q:"Denotasi adalah?",a:["Makna harfiah","Makna tambahan","Makna emosional","Makna kiasan"],c:0},
+      {q:"Ethos dalam retorika merujuk pada?",a:["Kredibilitas pembicara","Emosi audiens","Logika argumen","Estetika bahasa"],c:0},
+      {q:"Fungsi bahasa Jakobson fokus pada pesan?",a:["Puitik","Referensial","Fatik","Konatif"],c:0},
+      {q:"Gaya bahasa ironi adalah?",a:["Sindiran berlawanan makna","Penghematan kata","Perulangan kata","Perbandingan langsung"],c:0},
+      {q:"Hipogram dalam puisi?",a:["Teks latar belakang puisi baru","Rima akhir baris","Jumlah bait","Jenis irama"],c:0},
       {q:"Kalimat pasif intransitif ditandai?",a:["Tidak memiliki objek","Memiliki objek langsung","Menggunakan 'oleh'","Predikat aktif"],c:0},
       {q:"Wacana kohesif ditandai oleh?",a:["Kepaduan bentuk antarunsur","Kreativitas pengarang","Pilihan kata mewah","Kalimat panjang"],c:0}
     ]
   },
   ing:{
     easy:[
-      {q:"English word for 'kucing'?",a:["Cat","Dog","Bird","Fish"],c:0},
+      {q:"English for 'kucing'?",a:["Cat","Dog","Bird","Fish"],c:0},
       {q:"I ___ a student.",a:["am","is","are","be"],c:0},
       {q:"Opposite of 'big'?",a:["Small","Tall","Short","Tiny"],c:0},
       {q:"Days in a week?",a:["Seven","Five","Six","Eight"],c:0},
@@ -369,39 +434,39 @@ const QS={
       {q:"Color of the sky?",a:["Blue","Red","Green","Yellow"],c:0}
     ],
     med:[
-      {q:"'She has been studying 3 hours.' = ___ tense.",a:["Present Perfect Continuous","Past Perfect","Simple Present","Future Perfect"],c:0},
+      {q:"'She has been studying 3 hours.' — ___ tense.",a:["Present Perfect Continuous","Past Perfect","Simple Present","Future Perfect"],c:0},
       {q:"If it rains, I ___ stay home.",a:["will","would","should","shall"],c:0},
       {q:"Passive: 'They built this house' →",a:["This house was built by them","This house is built","They were built","This house built"],c:0},
       {q:"'Although' functions as a?",a:["Conjunction","Preposition","Adjective","Adverb"],c:0},
       {q:"Synonym of 'enormous'?",a:["Huge","Tiny","Average","Narrow"],c:0},
-      {q:"'I wish I ___ fly.' (unreal)",a:["could","can","will","would"],c:0},
+      {q:"'I wish I ___ fly.' (unreal wish)",a:["could","can","will","would"],c:0},
       {q:"Correct article: ___ honest man.",a:["An","A","The","Ø"],c:0},
-      {q:"'He said, I am tired.' Reported →",a:["He said he was tired.","He said he is tired.","He says he was tired.","He told he is tired."],c:0},
+      {q:"He said 'I am tired.' Reported →",a:["He said he was tired.","He said he is tired.","He says he was tired.","He told he is tired."],c:0},
       {q:"'Quickly' is a(n)?",a:["Adverb","Adjective","Noun","Verb"],c:0},
       {q:"Correct: Neither he nor she ___ right.",a:["is","are","be","were"],c:0}
     ],
     hard:[
-      {q:"'Having finished the report, she left.' is?",a:["Participle clause","Relative clause","Noun clause","Adverb clause"],c:0},
-      {q:"Subjunctive in 'I suggest that he be present' uses?",a:["Base form","Past tense","Past participle","Gerund"],c:0},
-      {q:"Example of litotes?",a:["'Not bad' = good","Thunder roared","She flew away","A million thanks"],c:0},
-      {q:"Speech act committing speaker to future action?",a:["Commissive","Directive","Expressive","Declarative"],c:0},
-      {q:"'Whom did you see?' — 'Whom' is?",a:["Object of the verb","Subject","Possessive","Reflexive"],c:0},
+      {q:"'Having finished, she left.' is?",a:["Participle clause","Relative clause","Noun clause","Adverb clause"],c:0},
+      {q:"Subjunctive in 'I suggest he be present' uses?",a:["Base form","Past tense","Past participle","Gerund"],c:0},
+      {q:"Example of litotes?",a:["'Not bad' meaning 'good'","Thunder roared","She flew away","A million thanks"],c:0},
+      {q:"Speech act committing to future action?",a:["Commissive","Directive","Expressive","Declarative"],c:0},
+      {q:"'Whom' in 'Whom did you see?' is?",a:["Object of verb","Subject","Possessive","Reflexive"],c:0},
       {q:"'Code-switching' refers to?",a:["Alternating languages in talk","Encrypting messages","Changing writing style","Translating literally"],c:0},
-      {q:"Which has a dangling modifier?",a:["Walking to school, the rain started.","He walked slowly.","She reads books.","They finished early."],c:0},
-      {q:"'Cohesion' in discourse analysis?",a:["Formal surface links","Overall meaning","Speaker's intention","Topic sentence"],c:0},
+      {q:"Dangling modifier example?",a:["Walking to school, the rain started.","He walked slowly.","She reads books.","They finished early."],c:0},
+      {q:"Cohesion in discourse analysis?",a:["Formal surface links","Overall meaning","Speaker's intention","Topic sentence placement"],c:0},
       {q:"Example of synecdoche?",a:["All hands on deck","Life is a journey","Whisper of leaves","She devoured the book"],c:0},
-      {q:"Sapir-Whorf hypothesis claims?",a:["Language shapes thought","Thought shapes language","Grammar is universal","Culture & language separate"],c:0}
+      {q:"Sapir-Whorf hypothesis claims?",a:["Language shapes thought","Thought shapes language","Grammar is universal","Culture & language are separate"],c:0}
     ]
   },
   ppkn:{
     easy:[
-      {q:"Bulu sayap Garuda Pancasila berjumlah?",a:["17","45","8","19"],c:0},
+      {q:"Bulu sayap Garuda Pancasila?",a:["17","45","8","19"],c:0},
       {q:"Semboyan negara Indonesia?",a:["Bhinneka Tunggal Ika","Tut Wuri Handayani","Bhineka Satu","Garuda Pancasila"],c:0},
       {q:"Hak pendidikan UUD 1945 pasal?",a:["31","28","27","29"],c:0},
       {q:"Lembaga legislatif Indonesia?",a:["DPR","Presiden","MA","KPU"],c:0},
       {q:"Pemilu diadakan setiap?",a:["5 tahun","4 tahun","3 tahun","6 tahun"],c:0},
       {q:"Sila ke-3 Pancasila?",a:["Persatuan Indonesia","Kemanusiaan","Ketuhanan","Kerakyatan"],c:0},
-      {q:"Norma dibuat oleh negara disebut?",a:["Hukum","Adat","Agama","Sopan santun"],c:0},
+      {q:"Norma dibuat negara disebut?",a:["Hukum","Adat","Agama","Sopan santun"],c:0},
       {q:"Nilai utama demokrasi?",a:["Kedaulatan rakyat","Kekuasaan raja","Kekuatan militer","Kekayaan negara"],c:0},
       {q:"HAM bersifat?",a:["Universal","Parsial","Kondisional","Temporal"],c:0},
       {q:"UUD 1945 disahkan tanggal?",a:["18 Agustus 1945","17 Agustus 1945","1 Juni 1945","22 Juni 1945"],c:0}
@@ -409,66 +474,49 @@ const QS={
     med:[
       {q:"Mahkamah Konstitusi berfungsi?",a:["Menguji UU terhadap UUD","Mengadili korupsi","Membuat peraturan","Mengawasi DPR"],c:0},
       {q:"Konvensi Hak Anak PBB diadopsi tahun?",a:["1989","1948","1966","2000"],c:0},
-      {q:"Otonomi daerah diatur dalam UU Nomor?",a:["23 Tahun 2014","22 Tahun 1999","32 Tahun 2004","9 Tahun 2015"],c:0},
+      {q:"Otonomi daerah diatur UU Nomor?",a:["23 Tahun 2014","22 Tahun 1999","32 Tahun 2004","9 Tahun 2015"],c:0},
       {q:"Musyawarah mufakat penerapan demokrasi?",a:["Pancasila","Liberal","Sosialis","Komunis"],c:0},
-      {q:"Korupsi diatur dalam UU Nomor?",a:["31 Tahun 1999","20 Tahun 2001","30 Tahun 2002","28 Tahun 1999"],c:0},
-      {q:"Pembukaan UUD 1945 terdiri dari berapa alinea?",a:["4","3","5","2"],c:0},
+      {q:"Korupsi diatur UU Nomor?",a:["31 Tahun 1999","20 Tahun 2001","30 Tahun 2002","28 Tahun 1999"],c:0},
+      {q:"Pembukaan UUD 1945 berapa alinea?",a:["4","3","5","2"],c:0},
       {q:"Hak recall DPR dimiliki oleh?",a:["Partai politik","Presiden","MK","Rakyat"],c:0},
       {q:"Suprastruktur politik Indonesia?",a:["Lembaga negara resmi","Partai politik","LSM","Ormas"],c:0},
-      {q:"Pasal warga negara di luar negeri?",a:["26","27","28","29"],c:0},
-      {q:"Pemilihan Kepala Daerah diatur UU Nomor?",a:["10 Tahun 2016","15 Tahun 2011","8 Tahun 2012","7 Tahun 2017"],c:0}
+      {q:"Warga negara di luar negeri pasal?",a:["26","27","28","29"],c:0},
+      {q:"Pilkada diatur UU Nomor?",a:["10 Tahun 2016","15 Tahun 2011","8 Tahun 2012","7 Tahun 2017"],c:0}
     ],
     hard:[
-      {q:"Dalam presidensial, presiden tanggung jawab kepada?",a:["Rakyat via konstitusi","Parlemen","PM","Mahkamah Agung"],c:0},
+      {q:"Presiden bertanggung jawab kepada?",a:["Rakyat via konstitusi","Parlemen","PM","Mahkamah Agung"],c:0},
       {q:"Check and balances bertujuan?",a:["Mencegah penyalahgunaan kekuasaan","Percepat legislasi","Perkuat eksekutif","Efisiensi birokrasi"],c:0},
-      {q:"Pemisahan kekuasaan horizontal di Indonesia?",a:["Legislatif, eksekutif, yudikatif","Pusat dan daerah","TNI dan sipil","Pemerintah dan rakyat"],c:0},
-      {q:"Judicial review di Indonesia dilakukan?",a:["MK untuk UU, MA untuk di bawah UU","Hanya MK","Hanya MA","DPR"],c:0},
+      {q:"Pemisahan kekuasaan horizontal?",a:["Legislatif, eksekutif, yudikatif","Pusat dan daerah","TNI dan sipil","Pemerintah dan rakyat"],c:0},
+      {q:"Judicial review Indonesia?",a:["MK untuk UU, MA untuk di bawah UU","Hanya MK","Hanya MA","DPR"],c:0},
       {q:"Rule of law mencakup?",a:["Supremasi hukum, persamaan, HAM","Kekuasaan penguasa","Hukum adat saja","Kebijakan pemerintah"],c:0},
-      {q:"Federalisme vs unitarisme perbedaannya?",a:["Pembagian kekuasaan vertikal konstitusional","Tidak ada pemerintah pusat","Otonomi total daerah","Sistem presidensial"],c:0},
-      {q:"Kewarganegaraan ganda terbatas untuk?",a:["Anak perkawinan campuran sampai 18 tahun","Semua warga","Diaspora dewasa","WNA menikah WNI"],c:0},
+      {q:"Federalisme vs unitarisme?",a:["Pembagian kekuasaan vertikal konstitusional","Tidak ada pemerintah pusat","Otonomi total daerah","Sistem presidensial"],c:0},
+      {q:"Kewarganegaraan ganda terbatas untuk?",a:["Anak perkawinan campuran hingga 18 tahun","Semua warga","Diaspora dewasa","WNA menikah WNI"],c:0},
       {q:"HAM generasi ketiga mencakup?",a:["Pembangunan & lingkungan hidup","Sipil & politik","Ekonomi & sosial","Individu murni"],c:0},
       {q:"Amnesti diberikan oleh?",a:["Presiden + pertimbangan DPR","MK","MA","MPR"],c:0},
-      {q:"Teori Rousseau vs Hobbes: Rousseau?",a:["Optimis tentang sifat manusia","Pesimis tentang manusia","Tolak kontrak sosial","Dukung monarki absolut"],c:0}
+      {q:"Rousseau vs Hobbes: Rousseau?",a:["Optimis tentang sifat manusia","Pesimis tentang manusia","Tolak kontrak sosial","Dukung monarki"],c:0}
     ]
   }
 };
-
 const TLIMIT={easy:30,med:25,hard:20};
 const SPQ={easy:10,med:15,hard:20};
-const SELCLS={math:'sel-math',ipa:'sel-ipa',ips:'sel-ips',indo:'sel-indo',ing:'sel-ing',ppkn:'sel-ppkn'};
-const ACTCLS={easy:'active-easy',med:'active-med',hard:'active-hard'};
-
 let subj='',diff='',questions=[],qi=0,score=0,correct=0,wrong=0,streak=0,maxStreak=0;
 let timer=null,timeLeft=0,totalTime=0,answered=false;
 
 function pickSubj(el){
-  document.querySelectorAll('.subj-card').forEach(e=>{
-    const v=e.dataset.val;
-    e.classList.remove(SELCLS[v]);
-  });
-  el.classList.add(SELCLS[el.dataset.val]);
-  subj=el.dataset.val;
-  checkReady();
+  document.querySelectorAll('.subj-card').forEach(e=>e.classList.remove('sel'));
+  el.classList.add('sel');
+  subj=el.dataset.val;checkReady();
 }
 function pickDiff(el){
-  document.querySelectorAll('.diff-card').forEach(e=>{
-    e.classList.remove('active-easy','active-med','active-hard');
-  });
-  el.classList.add(ACTCLS[el.dataset.val]);
-  diff=el.dataset.val;
-  checkReady();
+  document.querySelectorAll('.diff-card').forEach(e=>e.classList.remove('da'));
+  el.classList.add('da');
+  diff=el.dataset.val;checkReady();
 }
-function checkReady(){
-  document.getElementById('start-btn').disabled=!(subj&&diff);
-}
+function checkReady(){document.getElementById('start-btn').disabled=!(subj&&diff);}
 function shuffle(a){return a.sort(()=>Math.random()-.5)}
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
 function startGame(){
-  const pool=QS[subj][diff];
-  questions=shuffle([...pool]).slice(0,10);
+  questions=shuffle([...QS[subj][diff]]).slice(0,10);
   qi=0;score=0;correct=0;wrong=0;streak=0;maxStreak=0;totalTime=0;
   show('s-game');renderQ();
 }
@@ -481,81 +529,50 @@ function renderQ(){
   document.getElementById('streak-txt').textContent=streak;
   document.getElementById('q-text').textContent=q.q;
   document.getElementById('next-btn').style.display='none';
-  const fb=document.getElementById('feedback');
-  fb.textContent='';fb.className='feedback-box fb-empty';
-  const shuffled=q.a.map((a,i)=>({a,orig:i})).sort(()=>Math.random()-.5);
-  document.getElementById('ans-grid').innerHTML=shuffled.map(({a,orig})=>
-    `<button class="ans-btn" onclick="checkAns(this,${orig},${q.c})">${a}</button>`
+  const fb=document.getElementById('feedback');fb.textContent='';fb.className='fb-box fb-empty';
+  const sh=q.a.map((a,i)=>({a,i})).sort(()=>Math.random()-.5);
+  document.getElementById('ans-grid').innerHTML=sh.map(({a,i})=>
+    `<button class="ans-btn" onclick="checkAns(this,${i},${q.c})">${a}</button>`
   ).join('');
   startTimer();
 }
 function startTimer(){
-  clearInterval(timer);
-  timeLeft=TLIMIT[diff];
-  const fill=document.getElementById('t-fill');
-  const txt=document.getElementById('t-num');
-  fill.style.width='100%';fill.className='t-fill';
-  txt.textContent=timeLeft+'s';
+  clearInterval(timer);timeLeft=TLIMIT[diff];
+  const fill=document.getElementById('t-fill'),txt=document.getElementById('t-num');
+  fill.style.width='100%';fill.className='t-fill';txt.textContent=timeLeft+'s';
   timer=setInterval(()=>{
     timeLeft--;totalTime++;
     txt.textContent=timeLeft+'s';
-    const pct=(timeLeft/TLIMIT[diff])*100;
-    fill.style.width=pct+'%';
-    if(pct<=30)fill.className='t-fill urgent';
+    const p=(timeLeft/TLIMIT[diff])*100;
+    fill.style.width=p+'%';
+    if(p<=30)fill.className='t-fill urgent';
     if(timeLeft<=0){clearInterval(timer);timeUp();}
   },1000);
 }
 function timeUp(){
-  if(answered)return;
-  answered=true;
+  if(answered)return;answered=true;
   const q=questions[qi];
-  document.querySelectorAll('.ans-btn').forEach(b=>{
-    b.disabled=true;
-    const o=parseInt(b.getAttribute('onclick').match(/\d+/g)[0]);
-    if(o===q.c)b.className='ans-btn reveal';
-  });
-  const fb=document.getElementById('feedback');
-  fb.textContent='⏰ Waktu habis! Jawaban benar ditandai.';
-  fb.className='feedback-box fb-time';
-  streak=0;wrong++;
-  document.getElementById('next-btn').style.display='block';
+  document.querySelectorAll('.ans-btn').forEach(b=>{b.disabled=true;const o=parseInt(b.getAttribute('onclick').match(/\d+/g)[0]);if(o===q.c)b.className='ans-btn reveal';});
+  const fb=document.getElementById('feedback');fb.textContent='⏰ Waktu habis! Jawaban benar ditandai.';fb.className='fb-box fb-time';
+  streak=0;wrong++;document.getElementById('next-btn').style.display='block';
 }
 function checkAns(btn,orig,ci){
-  if(answered)return;
-  answered=true;clearInterval(timer);
-  totalTime+=TLIMIT[diff]-timeLeft;
+  if(answered)return;answered=true;clearInterval(timer);totalTime+=TLIMIT[diff]-timeLeft;
   const ok=orig===ci;
-  document.querySelectorAll('.ans-btn').forEach(b=>{
-    b.disabled=true;
-    const o=parseInt(b.getAttribute('onclick').match(/\d+/g)[0]);
-    if(o===ci)b.className='ans-btn correct';
-  });
+  document.querySelectorAll('.ans-btn').forEach(b=>{b.disabled=true;const o=parseInt(b.getAttribute('onclick').match(/\d+/g)[0]);if(o===ci)b.className='ans-btn correct';});
   const fb=document.getElementById('feedback');
-  if(ok){
-    streak++;maxStreak=Math.max(maxStreak,streak);
-    const bonus=streak>=3?Math.floor(SPQ[diff]*.5):0;
-    const pts=SPQ[diff]+bonus;score+=pts;correct++;
-    fb.textContent=bonus>0?`✅ Benar! +${pts} poin (streak bonus +${bonus})`:`✅ Benar! +${pts} poin`;
-    fb.className='feedback-box fb-ok';
-  } else {
-    btn.className='ans-btn wrong';streak=0;wrong++;
-    fb.textContent='❌ Salah. Jawaban benar ditandai hijau.';
-    fb.className='feedback-box fb-no';
-  }
-  document.getElementById('score-disp').textContent=score;
-  document.getElementById('streak-txt').textContent=streak;
+  if(ok){streak++;maxStreak=Math.max(maxStreak,streak);const bonus=streak>=3?Math.floor(SPQ[diff]*.5):0;const pts=SPQ[diff]+bonus;score+=pts;correct++;fb.textContent=bonus>0?`✅ Benar! +${pts} poin (streak bonus +${bonus})`:`✅ Benar! +${pts} poin`;fb.className='fb-box fb-ok';}
+  else{btn.className='ans-btn wrong';streak=0;wrong++;fb.textContent='❌ Salah. Jawaban benar ditandai hijau.';fb.className='fb-box fb-no';}
+  document.getElementById('score-disp').textContent=score;document.getElementById('streak-txt').textContent=streak;
   document.getElementById('next-btn').style.display='block';
 }
 function nextQ(){qi++;if(qi>=10)showResult();else renderQ();}
 function showResult(){
-  clearInterval(timer);
-  document.getElementById('p-fill').style.width='100%';
+  clearInterval(timer);document.getElementById('p-fill').style.width='100%';
   const pct=Math.round((correct/10)*100);
-  const stars=pct>=80?'⭐⭐⭐':pct>=60?'⭐⭐':'⭐';
-  const msg=pct>=80?'Luar biasa! Kamu sangat pintar! 🎉':pct>=60?'Bagus! Terus semangat belajar! 💪':pct>=40?'Lumayan! Jangan menyerah! 📚':'Semangat belajar lagi ya, pasti bisa! 🌱';
   document.getElementById('res-score').textContent=score;
-  document.getElementById('res-stars').textContent=stars;
-  document.getElementById('res-msg').textContent=`${msg} (${pct}% benar · streak terbaik ${maxStreak})`;
+  document.getElementById('res-stars').textContent=pct>=80?'⭐⭐⭐':pct>=60?'⭐⭐':'⭐';
+  document.getElementById('res-msg').textContent=(pct>=80?'Luar biasa! Kamu sangat pintar! 🎉':pct>=60?'Bagus! Terus semangat belajar! 💪':pct>=40?'Lumayan! Jangan menyerah! 📚':'Semangat belajar lagi ya! 🌱')+` · ${pct}% benar · streak terbaik ${maxStreak}`;
   document.getElementById('r-correct').textContent=correct;
   document.getElementById('r-wrong').textContent=10-correct;
   document.getElementById('r-time').textContent=totalTime+'s';
