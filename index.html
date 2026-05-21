@@ -266,6 +266,7 @@ body{font-family:var(--font-sans);font-size:15px;background:#0f1117}
 <div id="s-game" class="screen">
   <div class="game-wrap">
     <div class="g-header">
+      <button onclick="if(confirm('Keluar dari kuis?'))goMenu()" style="background:#1a1d2e;border:1.5px solid #2a2b45;border-radius:20px;padding:4px 12px;color:#afa9ec;font-size:13px;cursor:pointer;">← Kembali</button>
       <div class="g-badge"><i class="ti ti-star" style="font-size:13px" aria-hidden="true"></i><span id="score-disp">0</span> poin</div>
       <div class="g-streak">🔥 <span id="streak-txt">0</span> streak</div>
     </div>
